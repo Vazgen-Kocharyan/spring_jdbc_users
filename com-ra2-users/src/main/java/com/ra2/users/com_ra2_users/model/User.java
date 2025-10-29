@@ -1,6 +1,6 @@
 package com.ra2.users.com_ra2_users.model;
 
-import java.time.LocalDateTime;
+import java.sql.Time;
 
 public class User {
 
@@ -9,9 +9,9 @@ public class User {
     private String description;
     private String email;
     private String password;
-    private LocalDateTime ultimAcces;
-    private LocalDateTime dataCreated;
-    private LocalDateTime dataUpdated;
+    private Time ultimAcces;
+    private Time dataCreated;
+    private Time dataUpdated;
 
     public Long getId() {
         return id;
@@ -43,22 +43,22 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-    public LocalDateTime getUltimAcces() {
+    public Time getUltimAcces() {
         return ultimAcces;
     }
-    public void setUltimAcces(LocalDateTime ultimAcces) {
+    public void setUltimAcces(Time ultimAcces) {
         this.ultimAcces = ultimAcces;
     }
-    public LocalDateTime getDataCreated() {
+    public Time getDataCreated() {
         return dataCreated;
     }
-    public void setDataCreated(LocalDateTime dataCreated) {
+    public void setDataCreated(Time dataCreated) {
         this.dataCreated = dataCreated;
     }
-    public LocalDateTime getDataUpdated() {
+    public Time getDataUpdated() {
         return dataUpdated;
     }
-    public void setDataUpdated(LocalDateTime dataUpdated) {
+    public void setDataUpdated(Time dataUpdated) {
         this.dataUpdated = dataUpdated;
     }
     @Override
