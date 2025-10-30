@@ -2,7 +2,6 @@ package com.ra2.users.com_ra2_users.repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -49,7 +48,7 @@ public class UserRepository {
         return jdbcTemplate.query(sql, new UserRowMapper());
     }
 
-    public User findById(Long id) {
+    public User findOne(Long id) {
         String sql = "SELECT * FROM users WHERE id = ?";
         
         try {
@@ -65,5 +64,9 @@ public class UserRepository {
         return jdbcTemplate.update(sql, user.getName(), user.getDescription(), user.getEmail(), user.getPassword(), LocalDateTime.now(), id);
     }
 
+    public int deleteUser(Long id) {
+        String sql = "DELETE FROM users WHERE id = ?";
 
+        return jdbcTemplate.update(sql, id);
+    }
 }
