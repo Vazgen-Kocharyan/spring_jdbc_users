@@ -1,6 +1,6 @@
 package com.ra2.users.com_ra2_users.model;
 
-import java.sql.Time;
+import java.sql.Timestamp;
 
 public class User {
 
@@ -9,9 +9,9 @@ public class User {
     private String description;
     private String email;
     private String password;
-    private Time ultimAcces;
-    private Time dataCreated;
-    private Time dataUpdated;
+    private Timestamp ultimAcces;
+    private Timestamp dataCreated;
+    private Timestamp dataUpdated;
 
     public Long getId() {
         return id;
@@ -43,22 +43,22 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-    public Time getUltimAcces() {
+    public Timestamp getUltimAcces() {
         return ultimAcces;
     }
-    public void setUltimAcces(Time ultimAcces) {
+    public void setUltimAcces(Timestamp ultimAcces) {
         this.ultimAcces = ultimAcces;
     }
-    public Time getDataCreated() {
+    public Timestamp getDataCreated() {
         return dataCreated;
     }
-    public void setDataCreated(Time dataCreated) {
+    public void setDataCreated(Timestamp dataCreated) {
         this.dataCreated = dataCreated;
     }
-    public Time getDataUpdated() {
+    public Timestamp getDataUpdated() {
         return dataUpdated;
     }
-    public void setDataUpdated(Time dataUpdated) {
+    public void setDataUpdated(Timestamp dataUpdated) {
         this.dataUpdated = dataUpdated;
     }
     @Override

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.ra2.users.com_ra2_users.model.User;
 import com.ra2.users.com_ra2_users.repository.UserRepository;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -32,15 +33,17 @@ public class UserController {
 
     @PostMapping("/users")
     public ResponseEntity<String> postUser(@RequestBody User user) {    
-        
+
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
         userRepository.save(
             user.getName(),
             user.getDescription(),
             user.getEmail(),
             user.getPassword(),
-            LocalDateTime.now(),
-            LocalDateTime.now(),
-            LocalDateTime.now()
+            timestamp,
+            timestamp,
+            timestamp
         );
 
         
@@ -53,7 +56,7 @@ public class UserController {
     public ResponseEntity<List<User>> getUsers() {
         List<User> users = userRepository.findAll();
 
-        if (users.isEmpty()) return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        if (users.isEmpty()) return ResponseEntity.notFound().build();
         return ResponseEntity.status(HttpStatus.OK).body(users);
     }
     

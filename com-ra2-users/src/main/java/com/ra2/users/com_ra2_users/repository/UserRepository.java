@@ -1,5 +1,6 @@
 package com.ra2.users.com_ra2_users.repository;
 
+import java.sql.Timestamp;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -29,16 +30,16 @@ public class UserRepository {
             user.setDescription(rs.getString("description"));
             user.setEmail(rs.getString("email"));
             user.setPassword(rs.getString("password"));
-            user.setUltimAcces(rs.getTime("ultimAcces"));
-            user.setDataCreated(rs.getTime("dataCreated"));
-            user.setDataUpdated(rs.getTime("dataUpdated"));
+            user.setUltimAcces(rs.getTimestamp("ultimAcces"));
+            user.setDataCreated(rs.getTimestamp("dataCreated"));
+            user.setDataUpdated(rs.getTimestamp("dataUpdated"));
 
             return user;
         }
     }
 
 
-    public int save(String name, String description, String email, String password, LocalDateTime ultimAcces, LocalDateTime dataCreated, LocalDateTime dataUpdated) {
+    public int save(String name, String description, String email, String password, Timestamp ultimAcces, Timestamp dataCreated, Timestamp dataUpdated) {
         String sql = "INSERT INTO users (name, description, email, password, ultimAcces, dataCreated, dataUpdated) VALUES (?, ?, ?, ?, ?, ?, ?)";
         return jdbcTemplate.update(sql, name, description, email, password, ultimAcces, dataCreated, dataUpdated);
     }
