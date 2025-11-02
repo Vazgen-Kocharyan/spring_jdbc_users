@@ -30,11 +30,13 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
+    // ---------------------- POST /api/users ----------------------
     @PostMapping("/users")
     public ResponseEntity<String> postUser(@RequestBody User user) {    
 
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
+        // Crida al repositori per inserir un nou usuari a la base de dades
         userRepository.save(
             user.getName(),
             user.getDescription(),
@@ -45,62 +47,83 @@ public class UserController {
             timestamp
         );
 
-        
+        // Retorna un missatge d’èxit amb el codi HTTP 201 (Created)
         String msg = "User inserted correctly";
 
         return ResponseEntity.status(HttpStatus.CREATED).body(msg);
     }
 
+    // ---------------------- GET /api/users ----------------------
     @GetMapping("/users")
     public ResponseEntity<List<User>> getUsers() {
+        // Obté la llista completa d’usuaris des de la base de dades
         List<User> users = userRepository.findAll();
 
+        // Si la llista és buida, retorna 404 (Not Found)
         if (users.isEmpty()) return ResponseEntity.notFound().build();
+
+        // Si hi ha usuaris, retorna 200 (OK) amb la llista
         return ResponseEntity.status(HttpStatus.OK).body(users);
     }
     
+    // ---------------------- GET /api/users/{user_id} ----------------------
     @GetMapping("/users/{user_id}")
     public ResponseEntity<User> getUserById(@PathVariable Long user_id) {
+        // Busca un usuari pel seu ID
         User user = userRepository.findOne(user_id);
 
+        // Si no existeix, retorna 404 (Not Found)
         if (user == null) {
             return ResponseEntity.notFound().build();
         }
 
+        // Si existeix, retorna 200 (OK) amb l’usuari trobat
         return ResponseEntity.ok().body(user);
 
     }
 
+    // ---------------------- PUT /api/users/{user_id} ----------------------
     @PutMapping("/users/{user_id}")
     public ResponseEntity<String> updateUser(@PathVariable Long user_id, @RequestBody User user) {
-        
+        // Actualitza tots els camps de l’usuari amb les noves dades
         userRepository.modifyUser(user, user_id);
         
+        // Retorna 200 (OK) amb un missatge de confirmació
         return ResponseEntity.ok().body("User updated successfully");
     }
 
+    // ---------------------- PATCH /api/users/{user_id}/name ----------------------
     @PatchMapping("/users/{user_id}/name")
     public ResponseEntity<User> updateName(@PathVariable Long user_id, @RequestParam String name) {
+        // Busca l’usuari que s’ha d’actualitzar
         User user = userRepository.findOne(user_id);
 
+        // Si no existeix, retorna 404
         if (user == null) return ResponseEntity.notFound().build();
 
+        // Modifica només el nom
         user.setName(name);
 
+        // Actualitza el registre a la base de dades
         userRepository.modifyUser(user, user_id);
 
+        // Retorna l’usuari actualitzat
         return ResponseEntity.ok().body(userRepository.findOne(user_id));
     }
 
+    // ---------------------- DELETE /api/users/{user_id} ----------------------
     @DeleteMapping("/users/{user_id}")
     public ResponseEntity<String> deleteUser(@PathVariable Long user_id) {
+        // Busca l’usuari que s’ha d’eliminar
         User user = userRepository.findOne(user_id);
 
+        // Si existeix, l’elimina i retorna un missatge de confirmació
         if (user != null) {
             userRepository.deleteUser(user_id);
             return ResponseEntity.ok().body("User with id " + user_id + " deleted successfully");
         }
 
+        // Si no existeix, retorna 404 (Not Found)
         return ResponseEntity.notFound().build();
     }
 }
