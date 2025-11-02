@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -51,12 +50,12 @@ public class UserRepository {
 
     public User findOne(Long id) {
         String sql = "SELECT * FROM users WHERE id = ?";
-        
-        try {
-            return jdbcTemplate.queryForObject(sql, new UserRowMapper(), id);
-        } catch (EmptyResultDataAccessException e) {
-            return null;
-        }
+       
+        List<User> list = jdbcTemplate.query(sql, new UserRowMapper(), id);
+
+        if (list.isEmpty()) return null;
+
+        return list.get(0);
     }
 
     public int modifyUser(User user, Long id) {

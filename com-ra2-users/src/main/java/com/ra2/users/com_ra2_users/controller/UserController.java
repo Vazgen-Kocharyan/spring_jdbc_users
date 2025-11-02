@@ -12,7 +12,6 @@ import com.ra2.users.com_ra2_users.model.User;
 import com.ra2.users.com_ra2_users.repository.UserRepository;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -47,7 +46,7 @@ public class UserController {
         );
 
         
-        String msg = "User received: ";
+        String msg = "User inserted correctly";
 
         return ResponseEntity.status(HttpStatus.CREATED).body(msg);
     }
