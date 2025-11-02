@@ -85,7 +85,11 @@ public class UserController {
     // ---------------------- PUT /api/users/{user_id} ----------------------
     @PutMapping("/users/{user_id}")
     public ResponseEntity<String> updateUser(@PathVariable Long user_id, @RequestBody User user) {
+        // Si l'usuari no existeix retorna 404 NOT FOUND
+        if (userRepository.findOne(user_id) == null) return ResponseEntity.notFound().build();
+        
         // Actualitza tots els camps de l’usuari amb les noves dades
+        
         userRepository.modifyUser(user, user_id);
         
         // Retorna 200 (OK) amb un missatge de confirmació
