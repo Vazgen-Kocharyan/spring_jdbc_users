@@ -3,13 +3,14 @@ package com.ra2.users.com_ra2_users.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import com.ra2.users.com_ra2_users.model.User;
-import com.ra2.users.com_ra2_users.repository.UserRepository;
+import com.ra2.users.com_ra2_users.service.UserService;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -28,7 +29,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 public class UserController {
 
     @Autowired
-    UserRepository userRepository;
+    UserService userService;
 
     // ---------------------- POST /api/users ----------------------
     @PostMapping("/users")
@@ -37,7 +38,7 @@ public class UserController {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
         // Crida al repositori per inserir un nou usuari a la base de dades
-        userRepository.save(
+        userService.save(
             user.getName(),
             user.getDescription(),
             user.getEmail(),
@@ -57,7 +58,7 @@ public class UserController {
     @GetMapping("/users")
     public ResponseEntity<List<User>> getUsers() {
         // Obté la llista completa d’usuaris des de la base de dades
-        List<User> users = userRepository.findAll();
+        List<User> users = userService.findAll();
 
         // Si la llista és buida, retorna 404 (Not Found)
         if (users.isEmpty()) return ResponseEntity.notFound().build();
@@ -70,7 +71,7 @@ public class UserController {
     @GetMapping("/users/{user_id}")
     public ResponseEntity<User> getUserById(@PathVariable Long user_id) {
         // Busca un usuari pel seu ID
-        User user = userRepository.findOne(user_id);
+        User user = userService.findOne(user_id);
 
         // Si no existeix, retorna 404 (Not Found)
         if (user == null) {
@@ -86,11 +87,11 @@ public class UserController {
     @PutMapping("/users/{user_id}")
     public ResponseEntity<String> updateUser(@PathVariable Long user_id, @RequestBody User user) {
         // Si l'usuari no existeix retorna 404 NOT FOUND
-        if (userRepository.findOne(user_id) == null) return ResponseEntity.notFound().build();
+        if (userService.findOne(user_id) == null) return ResponseEntity.notFound().build();
         
         // Actualitza tots els camps de l’usuari amb les noves dades
         
-        userRepository.modifyUser(user, user_id);
+        userService.modifyUser(user, user_id);
         
         // Retorna 200 (OK) amb un missatge de confirmació
         return ResponseEntity.ok().body("User updated successfully");
@@ -100,7 +101,7 @@ public class UserController {
     @PatchMapping("/users/{user_id}/name")
     public ResponseEntity<User> updateName(@PathVariable Long user_id, @RequestParam String name) {
         // Busca l’usuari que s’ha d’actualitzar
-        User user = userRepository.findOne(user_id);
+        User user = userService.findOne(user_id);
 
         // Si no existeix, retorna 404
         if (user == null) return ResponseEntity.notFound().build();
@@ -109,25 +110,33 @@ public class UserController {
         user.setName(name);
 
         // Actualitza el registre a la base de dades
-        userRepository.modifyUser(user, user_id);
+        userService.modifyUser(user, user_id);
 
         // Retorna l’usuari actualitzat
-        return ResponseEntity.ok().body(userRepository.findOne(user_id));
+        return ResponseEntity.ok().body(userService.findOne(user_id));
     }
 
     // ---------------------- DELETE /api/users/{user_id} ----------------------
     @DeleteMapping("/users/{user_id}")
     public ResponseEntity<String> deleteUser(@PathVariable Long user_id) {
         // Busca l’usuari que s’ha d’eliminar
-        User user = userRepository.findOne(user_id);
+        User user = userService.findOne(user_id);
 
         // Si existeix, l’elimina i retorna un missatge de confirmació
         if (user != null) {
-            userRepository.deleteUser(user_id);
+            userService.deleteUser(user_id);
             return ResponseEntity.ok().body("User with id " + user_id + " deleted successfully");
         }
 
         // Si no existeix, retorna 404 (Not Found)
         return ResponseEntity.notFound().build();
     }
+
+    @PostMapping("/users/{user_id}/image")
+    public String postImage(@PathVariable Long user_id, @RequestParam MultipartFile imageFile) {
+        System.out.println(imageFile);
+
+        return userService.uploadImage(user_id, imageFile);        
+    }
+    
 }
