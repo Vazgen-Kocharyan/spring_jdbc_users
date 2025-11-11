@@ -9,6 +9,7 @@ public class User {
     private String description;
     private String email;
     private String password;
+    private String image_path;
     private Timestamp ultimAcces;
     private Timestamp dataCreated;
     private Timestamp dataUpdated;
@@ -61,11 +62,18 @@ public class User {
     public void setDataUpdated(Timestamp dataUpdated) {
         this.dataUpdated = dataUpdated;
     }
+    
     @Override
     public String toString() {
         return "User [id=" + id + ", name=" + name + ", description=" + description + ", email=" + email + ", password="
                 + password + ", ultimAcces=" + ultimAcces + ", dataCreated=" + dataCreated + ", dataUpdated="
                 + dataUpdated + "]";
+    }
+    public String getImage_path() {
+        return image_path;
+    }
+    public void setImage_path(String image_path) {
+        this.image_path = image_path;
     }
 
     

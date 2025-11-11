@@ -133,10 +133,8 @@ public class UserController {
     }
 
     @PostMapping("/users/{user_id}/image")
-    public String postImage(@PathVariable Long user_id, @RequestParam MultipartFile imageFile) {
-        System.out.println(imageFile);
-
-        return userService.uploadImage(user_id, imageFile);        
+    public ResponseEntity<String> postImage(@PathVariable Long user_id, @RequestParam MultipartFile imageFile) {
+        return userService.uploadImage(user_id, imageFile);
     }
     
 }
