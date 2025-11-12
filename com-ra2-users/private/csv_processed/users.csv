@@ -1,0 +1,11 @@
+name,description,email,password
+Ana López,Desarrolladora backend,ana.lopez@example.com,$2a$10$P4sSw0rd123
+Carlos Pérez,Diseñador UX,carlos.perez@example.com,$2a$10$hG1f9bAs3Cw
+Lucía Gómez,Project manager,lucia.gomez@example.com,$2a$10$Yt7eQ1Lp8Wz
+Diego Fernández,Administrador de sistemas,diego.fernandez@example.com,$2a$10$Kj2sM9vB4Tr
+María Torres,Desarrolladora frontend,maria.torres@example.com,$2a$10$L0pR8hT6nGf
+Javier Ramos,QA tester,javier.ramos@example.com,$2a$10$F2nV5kL8pHr
+Sara Díaz,Analista de datos,sara.diaz@example.com,$2a$10$A1xC7mR2vQs
+Andrés Ruiz,DevOps Engineer,andres.ruiz@example.com,$2a$10$J9rT4hQ8zLp
+Elena Navarro,Product owner,elena.navarro@example.com,$2a$10$Z3mQ2vF9dLb
+Tomás García,Ingeniero de soporte,tomas.garcia@example.com,$2a$10$C8yN1rK5xGh

@@ -14,6 +14,15 @@ public class User {
     private Timestamp dataCreated;
     private Timestamp dataUpdated;
 
+    public User() {}
+    
+    public User(String name, String description, String email, String password) {
+        this.name = name;
+        this.description = description;
+        this.email = email;
+        this.password = password;
+    }
+
     public Long getId() {
         return id;
     }

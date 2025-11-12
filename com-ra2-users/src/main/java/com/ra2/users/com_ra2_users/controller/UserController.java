@@ -136,5 +136,17 @@ public class UserController {
     public ResponseEntity<String> postImage(@PathVariable Long user_id, @RequestParam MultipartFile imageFile) {
         return userService.uploadImage(user_id, imageFile);
     }
+
+    @PostMapping("/users/upload-csv")
+    public ResponseEntity<String> uploadCsv(@RequestParam MultipartFile csvFile) {
+        String result = userService.uploadCsv(csvFile);
+        
+        if (result == null) {
+            return ResponseEntity.internalServerError().body("No s'ha afegit cap usuari");
+        }
+
+        return ResponseEntity.ok().body(result);
+    }
+    
     
 }
